@@ -53,24 +53,14 @@ script : |
 
   sudo chef-solo -c $WERCKER_SOURCE_DIR/solo.rb -j $WERCKER_SOURCE_DIR/solo.json -l debug
 
-  export NODEVERSION=0.10.26
-  cd $HOME
-  mkdir nodeinstall
-  cd nodeinstall
-  wget http://nodejs.org/dist/v$NODEVERSION/node-v$NODEVERSION.tar.gz
-  tar xzvf node-v$NODEVERSION.tar.gz
-  cd node-v$NODEVERSION
-  ./configure
-  make
-  sudo make install
-  cd $HOME
-  rm -fr nodeinstall
-  node -v
+  curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  sudo apt-get install -y nodejs
 
-  export RUBYVERSION=2.0.0-p353
-  sudo apt-get install git zlib1g-dev libreadline-dev libqtwebkit-dev
-  sudo apt-get remove ruby1.9.1
-  cd $HOME
+  echo "Node version:"
+  node -v
+  echo "NPM version:""
+  npm --version
+
   mkdir rubyinstall
   cd rubyinstall
   wget ftp://ftp.ruby-lang.org/pub/ruby/2.0/ruby-$RUBYVERSION.tar.gz
